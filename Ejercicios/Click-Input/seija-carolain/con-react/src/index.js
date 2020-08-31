@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App.jsx';
-import Card from './components/Card.js'
+
+import * as serviceWorker from './serviceWorker';
+import Evento from './components/Input';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Card />
-
+    <Evento />
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+serviceWorker.unregister();
