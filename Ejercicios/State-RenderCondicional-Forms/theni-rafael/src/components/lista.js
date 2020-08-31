@@ -3,7 +3,7 @@ import React from "react";
 const listaarr=["Uno", "Dos", "Tres", "Cutro"];
 
 const Listar= () => {
-    var [lista]=React.useState(listaarr);
+    const [lista]=React.useState(listaarr);
     return (
     <div>
         <ul>
