@@ -26,8 +26,8 @@ server.get('/bday', function (req, res){
   res.send(aboutObject.bday)
 })
 
-server.get('/data', function (req, res){
-  res.send(aboutObject)
+server.get('/', function (req, res){
+  res.send(JSON.stringify(aboutObject))
 })
 
 server.listen(3000);
