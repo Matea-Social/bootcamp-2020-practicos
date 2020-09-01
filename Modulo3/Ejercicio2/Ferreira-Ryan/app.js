@@ -1,4 +1,4 @@
-svar datosJSON = require('./base-de-datos.json'); 
+var datosJSON = require('./base-de-datos.json'); 
 const express = require('express');
 
 
