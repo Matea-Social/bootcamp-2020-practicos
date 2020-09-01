@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-fetch('url')
+fetch('https://superheroapi.com/api/10219737048390425/226/appearance')
 .then (function(response) {
     return response.text();
   } 
