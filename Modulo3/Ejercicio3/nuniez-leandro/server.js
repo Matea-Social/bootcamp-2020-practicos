@@ -46,7 +46,15 @@ server.route("/:name")
     canciones = cancionBorrada;
     res.send("Cancion eliminada");
   })
-  
-
+  .put((req, res) => {
+    const dataJson = req.body;
+    const actualizarCancion = canciones.filter((cancion) => {
+      if(dataJson.name && dataJson.artist && dataJson.duration) {
+        cancion = dataJson;
+      }
+      res.send("No se pudo agregar la cancion");
+    })
+    canciones = actualizarCancion;
+  })
 
 server.listen(4000);
