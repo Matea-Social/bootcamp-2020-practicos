@@ -43,6 +43,31 @@ const nuevaCancion = (req, res) => {
   }
 };
 
+const modificarCancionPorNombre = (req, res) => {
+  const nombre = req.params.cancion;
+  const cancionModificada = req.body;
+
+  if (cancionEsValida(cancionModificada)) {
+    const cancionParaModificar = listaDeCanciones.find(
+      (cancion) => cancion.name === nombre
+    );
+
+    const indexCancionModificada = listaDeCanciones.indexOf(
+      cancionParaModificar
+    );
+
+    if (indexCancionModificada != -1) {
+      cancionParaModificar.name = nombre;
+      listaDeCanciones[indexCancionModificada] = cancionModificada;
+      res.json(cancionModificada);
+    } else {
+      res.status(400).send("No hay canción con el `name` " + nombre);
+    }
+  } else {
+    res.status(400).send("El formato de la canción es incorrecto");
+  }
+};
+
 const eliminarCancionPorNombre = (req, res) => {
   const nombre = req.params.cancion;
 
@@ -63,5 +88,6 @@ module.exports = {
   listarCanciones,
   nuevaCancion,
   obtenerCancionPorNombre,
+  modificarCancionPorNombre,
   eliminarCancionPorNombre,
 };
