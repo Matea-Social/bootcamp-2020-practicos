@@ -12,51 +12,73 @@ const alistSongs = (req, res) => {
 };
 
 const filterSongByName = (req, res) => {
-  const nombre = req.params.cancion;
+  const name = req.params.cancion;
 
-  const resultado = songsList.filter((cancion) => {
-    if (cancion.name === nombre) {
+  const result = songsList.filter((cancion) => {
+    if (cancion.name === name) {
       return true;
     }
 
     return false;
   });
 
-  res.send(resultado);
+  res.send(result);
 };
 
 
-const cancionEsValida = (cancion) => {
-  if (cancion.name && cancion.artist && cancion.duration) {
+const songIsValid = (song) => {
+  if (song.name && song.artist && song.duration) {
     return true;
   }
   return false;
 };
 
 const newSong = (req, res) => {
-  const cancion = req.body;
-  if (cancionEsValida(cancion)) {
+  const song = req.body;
+  if (songIsValid(song)) {
     songsList.push(req.body);
     res.json(req.body);
   } else {
-    res.status(400).send("El formato de la canción es incorrecto");
+    res.status(400).send("Formato de canción inválido");
   }
 };
 
-const delateSongByName = (req, res) => {
-  const nombre = req.params.cancion;
+const modifySong = (req, res) => {
+  const song = req.body;
+  if (songIsValid(song)) {
+    const songFilter = filterSongByName;
+    /* .pop para borrar el ultimo elemento del array */
+    songsList.pop(songFilter);
+    songFilter.artist = song.artist;
+    songFilter.duration = song.duration;
+    songsList.push(song);
+    res.json(req.body);
+  } else {
+    res.status(400).send("Formato de canción inválido");
+  }
+};
 
-  const resultado = songsList.filter((cancion) => {
-    if (cancion.name !== nombre) {
+
+
+const delateSongByName = (req, res) => {
+  const name = req.params.cancion;
+
+  const result = songsList.filter((cancion) => {
+    if (cancion.name !== name) {
       return true;
     }
 
     return false;
   });
 
-  songsList = resultado;
+  songsList = result;
 
   res.send("Canción eliminada");
+};
+
+const changeSong = (req, res) => {
+  console.log("Hola");
+  
 };
 
 module.exports = {
@@ -64,4 +86,6 @@ module.exports = {
   newSong,
   filterSongByName,
   delateSongByName,
+  changeSong,
+  modifySong
 };

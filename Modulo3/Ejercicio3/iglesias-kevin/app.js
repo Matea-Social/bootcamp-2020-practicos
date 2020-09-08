@@ -16,9 +16,7 @@ server.post("/", utils.newSong);
 server.delete("/:songName", utils.delateSongByName);
 
 // PUT Modifica una canción
-server.put("/:songName", (req, res) => {
-  res.send("implementar PUT");
-});
+server.put("/:songName", utils.changeSong);
 
 server.listen(4100);
 console.log(server.listen);
