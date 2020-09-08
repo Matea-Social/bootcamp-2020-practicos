@@ -56,9 +56,17 @@ const nuevaCancion = (req, res) => {
 
 const modificoCancion = (req, res) => {
   const cancion = req.body;
+  const nombre = req.params.cancion;
   if (cancionEsValida(cancion)) {
     const cancionObt = obtenerCancionPorNombre;
-    listaDeCanciones.pop(cancionObt);
+    const resultado = listaDeCanciones.filter(() => {
+      if (nombre !== cancionObt.name) {
+        return true;
+      }
+      return false;
+    });
+    listaDeCanciones = resultado;
+
     cancionObt.artist = cancion.artist;
     cancionObt.duration = cancion.duration;
     listaDeCanciones.push(cancion);
