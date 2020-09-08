@@ -50,7 +50,6 @@ const eliminarCancionPorNombre = (req, res) => {
     if (cancion.name !== nombre) {
       return true;
     }
-
     return false;
   });
 
@@ -59,9 +58,25 @@ const eliminarCancionPorNombre = (req, res) => {
   res.send("Canción eliminada");
 };
 
+const actualizarCancion = (req, res) => {
+  const nombre = req.params.cancion;
+  const nuevaCancion = req.body;
+  const resultado = listaDeCanciones.filter((cancion) => {
+    if (cancion.name !== nombre) {
+      return true;
+    }
+    return false;
+  });
+  listaDeCanciones = resultado;
+  listaDeCanciones.push(nuevaCancion)
+
+  res.send("Canción Actualizada");
+}
+
 module.exports = {
   listarCanciones,
   nuevaCancion,
   obtenerCancionPorNombre,
   eliminarCancionPorNombre,
+  actualizarCancion,
 };

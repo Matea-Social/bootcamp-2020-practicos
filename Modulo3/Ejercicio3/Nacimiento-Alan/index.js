@@ -20,10 +20,6 @@ app.post("/", manejador.nuevaCancion);
 app.delete("/:cancion", manejador.eliminarCancionPorNombre);
 
 // PUT Modifica una canción
-app.put("/:cancion", (req, res) => {
-  res.send("implementar PUT");
-});
+app.put("/:cancion", manejador.actualizarCancion);
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+app.listen(port);
