@@ -1,26 +1,23 @@
-
 const express = require('express');
+const manejador = require('./manejador');
 const server = express();
+
 server.use(express.json());
 
-const songList = [];
+server.get('/', manejador.songsList);
 
-server.get('/', (req, res) => {
-    if(songList.length > 0) {
-        res.send(songList);
-    } else {
-        res.status(404);
-        res.send('Hubo un error');
-    }
-});
+// GET/NOMBRE 
+server.get('/:song', manejador.songForName);
 
-server.post('/', (req, res) => {
-    var song = req.body;
-    songList.push(song);
-    res.status(201);
-    res.send('Canción agregada correctamente.');
-});
+// POST ADD SOGN
+server.post('/', manejador.newSong);
+
+// DELETE
+server.delete('/:song', manejador.deleteSongForName);
+
+// PUT
+server.put('/:name', manejador.changeSong);
 
 server.listen(4000);
 
-console.log("http://localhost:4000");
+console.log('im working');
