@@ -86,6 +86,5 @@ module.exports = {
   newSong,
   filterSongByName,
   delateSongByName,
-  changeSong,
   modifySong
 };
