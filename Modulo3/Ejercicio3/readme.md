@@ -17,9 +17,15 @@ Cada canción debe tener:
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 - GET url-base -> devuelve la lista de canciones, si no hay canciones devuelve un error.
+<<<<<<< HEAD
 - GET url-base/nombre -> devuelve el json de la canción con ese nombre.
+=======
+- GET ur-base/cancion -> devuelve el json de la canción con ese nombre.
+>>>>>>> 1f14c998a10fbc7a46d1c0c57fea7d1865e8e576
 - POST url-base -> inserta la canción en la lista *si tiene el formato correcto*
-- DELETE url-base/name -> borra la cancion de la lista *si existe*
+- DELETE url-base/cancion -> borra la cancion de la lista *si existe*
+- PUT url-base/cancion -> Tiene que modificar la cancion que se pase en cancion con el valor que se recibe en el body
+
 
 Aclaraciones
 -----------------------------------------
