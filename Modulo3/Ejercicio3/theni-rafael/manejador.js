@@ -24,17 +24,6 @@ const obtenerCancionPorNombre = (req, res) => {
 
   res.send(resultado);
 };
-const obtenerCancionPorSoloNombre = (cancion) => {
-  const resultado = listaDeCanciones.filter((cancion) => {
-    if (cancion.name === listaDeCanciones.name) {
-      return true;
-    }
-
-    return false;
-  });
-
-  return (resultado);
-};
 
 // valida que el formato de la cancion sea valida
 const cancionEsValida = (cancion) => {
@@ -58,17 +47,13 @@ const modificoCancion = (req, res) => {
   const cancion = req.body;
   const nombre = req.params.cancion;
   if (cancionEsValida(cancion)) {
-    const cancionObt = obtenerCancionPorNombre;
-    const resultado = listaDeCanciones.filter(() => {
-      if (nombre !== cancionObt.name) {
-        return true;
-      }
-      return false;
+    const resultado = listaDeCanciones.filter((e) => {
+    if (e.name !== nombre) {
+      return true;
+    }
+    return false;
     });
     listaDeCanciones = resultado;
-
-    cancionObt.artist = cancion.artist;
-    cancionObt.duration = cancion.duration;
     listaDeCanciones.push(cancion);
     res.json(req.body);
   } else {
