@@ -50,6 +50,7 @@ const eliminarCancionPorNombre = (req, res) => {
     if (cancion.name !== nombre) {
       return true;
     }
+
     return false;
   });
 
@@ -65,12 +66,14 @@ const actualizarCancion = (req, res) => {
     if (cancion.name !== nombre) {
       return true;
     }
+
     return false;
   });
-  listaDeCanciones = resultado;
-  listaDeCanciones.push(nuevaCancion)
 
-  res.send("Canción Actualizada");
+  listaDeCanciones = resultado;
+  listaDeCanciones.push(nuevaCancion);
+
+  res.send("Canción actualizada");
 }
 
 module.exports = {
@@ -78,5 +81,5 @@ module.exports = {
   nuevaCancion,
   obtenerCancionPorNombre,
   eliminarCancionPorNombre,
-  actualizarCancion,
+  actualizarCancion
 };
