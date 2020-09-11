@@ -1,10 +1,10 @@
 // Lista de canciones
-let listaDeCanciones = [];
+let canciones = [{name:'Clara',artist:'NTVG',duration:'3:14'},{name:'Al vacio',artist:'NTVG',duration:'3:14'}];
 
 const listarCanciones = (req, res) => {
-  if (listaDeCanciones.length > 0) {
+  if (canciones.length > 0) {
     res.json({
-      canciones: listaDeCanciones,
+      canciones: canciones,
     });
   } else {
     res.status(404).send("No se encontraron canciones!");
@@ -14,7 +14,7 @@ const listarCanciones = (req, res) => {
 const obtenerCancionPorNombre = (req, res) => {
   const nombre = req.params.cancion;
 
-  const resultado = listaDeCanciones.filter((cancion) => {
+  const resultado = canciones.filter((cancion) => {
     if (cancion.name === nombre) {
       return true;
     }
@@ -32,11 +32,24 @@ const cancionEsValida = (cancion) => {
   }
   return false;
 };
+const modificarCancion = (req, res) => {
+  const nombre = req.params.cancion;
+  const cancionModificada = req.body;
+ 
+  if (cancionEsValida(cancionModificada)) {
+    const indice = canciones.findIndex(c => c.name === nombre);
+    canciones[indice] = cancionModificada
+    res.json(cancionModificada);
+  }
+   else {
+    res.status(400).send("El formato de la canción es incorrecto");
+  }
+
+}
 
 const nuevaCancion = (req, res) => {
-  const cancion = req.body;
   if (cancionEsValida(cancion)) {
-    listaDeCanciones.push(req.body);
+    canciones.push(req.body);
     res.json(req.body);
   } else {
     res.status(400).send("El formato de la canción es incorrecto");
@@ -46,37 +59,23 @@ const nuevaCancion = (req, res) => {
 const eliminarCancionPorNombre = (req, res) => {
   const nombre = req.params.cancion;
 
-  const resultado = listaDeCanciones.filter((cancion) => {
+  const resultado = canciones.filter((cancion) => {
     if (cancion.name !== nombre) {
       return true;
     }
+
     return false;
   });
 
-  listaDeCanciones = resultado;
+  canciones = resultado;
 
   res.send("Canción eliminada");
 };
-
-const actualizarCancion = (req, res) => {
-  const nombre = req.params.cancion;
-  const nuevaCancion = req.body;
-  const resultado = listaDeCanciones.filter((cancion) => {
-    if (cancion.name !== nombre) {
-      return true;
-    }
-    return false;
-  });
-  listaDeCanciones = resultado;
-  listaDeCanciones.push(nuevaCancion)
-
-  res.send("Canción Actualizada");
-}
 
 module.exports = {
   listarCanciones,
   nuevaCancion,
   obtenerCancionPorNombre,
   eliminarCancionPorNombre,
-  actualizarCancion,
+  modificarCancion
 };

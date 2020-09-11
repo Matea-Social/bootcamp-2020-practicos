@@ -1,4 +1,3 @@
-// Lista de canciones
 let listaDeCanciones = [];
 
 const listarCanciones = (req, res) => {
@@ -21,7 +20,6 @@ const obtenerCancionPorNombre = (req, res) => {
 
     return false;
   });
-
   res.send(resultado);
 };
 
@@ -50,6 +48,7 @@ const eliminarCancionPorNombre = (req, res) => {
     if (cancion.name !== nombre) {
       return true;
     }
+
     return false;
   });
 
@@ -59,24 +58,28 @@ const eliminarCancionPorNombre = (req, res) => {
 };
 
 const actualizarCancion = (req, res) => {
-  const nombre = req.params.cancion;
-  const nuevaCancion = req.body;
-  const resultado = listaDeCanciones.filter((cancion) => {
+const nombre = req.params.cancion;
+const resultado = listaDeCanciones.filter((cancion) => {
     if (cancion.name !== nombre) {
-      return true;
+    return true;
     }
     return false;
-  });
-  listaDeCanciones = resultado;
-  listaDeCanciones.push(nuevaCancion)
-
-  res.send("Canción Actualizada");
+});
+listaDeCanciones = resultado;
+const cancion = req.body;
+if (cancionEsValida(cancion)) {
+  listaDeCanciones.push(req.body);
+  res.json(req.body);
+} else {
+  res.status(400).send("El formato de la canción es incorrecto");
 }
+}
+
 
 module.exports = {
   listarCanciones,
   nuevaCancion,
   obtenerCancionPorNombre,
   eliminarCancionPorNombre,
-  actualizarCancion,
+  actualizarCancion
 };

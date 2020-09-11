@@ -43,6 +43,24 @@ const nuevaCancion = (req, res) => {
   }
 };
 
+const modificoCancion = (req, res) => {
+  const cancion = req.body;
+  const nombre = req.params.cancion;
+  if (cancionEsValida(cancion)) {
+    const resultado = listaDeCanciones.filter((e) => {
+    if (e.name !== nombre) {
+      return true;
+    }
+    return false;
+    });
+    listaDeCanciones = resultado;
+    listaDeCanciones.push(cancion);
+    res.json(req.body);
+  } else {
+    res.status(400).send("El formato de la canción es incorrecto");
+  }
+};
+
 const eliminarCancionPorNombre = (req, res) => {
   const nombre = req.params.cancion;
 
@@ -50,6 +68,7 @@ const eliminarCancionPorNombre = (req, res) => {
     if (cancion.name !== nombre) {
       return true;
     }
+
     return false;
   });
 
@@ -58,25 +77,10 @@ const eliminarCancionPorNombre = (req, res) => {
   res.send("Canción eliminada");
 };
 
-const actualizarCancion = (req, res) => {
-  const nombre = req.params.cancion;
-  const nuevaCancion = req.body;
-  const resultado = listaDeCanciones.filter((cancion) => {
-    if (cancion.name !== nombre) {
-      return true;
-    }
-    return false;
-  });
-  listaDeCanciones = resultado;
-  listaDeCanciones.push(nuevaCancion)
-
-  res.send("Canción Actualizada");
-}
-
 module.exports = {
   listarCanciones,
   nuevaCancion,
   obtenerCancionPorNombre,
   eliminarCancionPorNombre,
-  actualizarCancion,
+  modificoCancion
 };
