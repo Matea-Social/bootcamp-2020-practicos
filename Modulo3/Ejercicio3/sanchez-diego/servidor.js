@@ -1,37 +1,27 @@
-const express = require('express');
+const express = require("express");
 
-const server = express();
-const songs = song=[];
+const manejador = require("./manejador");
 
-server.use(express.json());
+const app = express();
+const port = 4000;
 
-server.get('/', (req, res)=>{
-    if(songs.length > 0){
-        res.jsong({
-            songs: songs,
-        });
-    }else{
-        res.status(500).send('No se encontraron canciones');
-    }
+app.use(express.json());
+
+// GET Devuelve la lista de canciones
+app.get("/", manejador.listarCanciones);
+
+// GET /:cancion Devuelve una sola cancion
+app.get("/:cancion", manejador.obtenerCancionPorNombre);
+
+// POST Crea nueva cancion
+app.post("/", manejador.nuevaCancion);
+
+// DELETE /:cancion Elimina una cancion
+app.delete("/:cancion", manejador.eliminarCancionPorNombre);
+
+// PUT Modifica una canción
+app.put("/:cancion", manejador.actualizarCancion);
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
 });
-
-server.get('/:nombre', (req, res)=>{
-    res.send(),
-    res.status(200);
-});
-
-server.post('/', (req, res)=>{
-    var song = req.body;
-    console.log(song);
-    songs.push(song);
-    res.status(201).send('Se agrego la concion correctamente.');
-});
-
-server.delete('/:song', (req, res)=>{
-        res.send('Delete the Song ${JSON.stringify(req.params)}');
-    }
-});
-
-
-server.listen(5000);
-console.log(server.listen);
