@@ -1,9 +1,24 @@
-let listaDeCanciones = [];
+// Lista de canciones
+const listaDeCanciones = [];
+
+const mongoose = require('mongoose');
+const {Schema} = mongoose;
+mongoose.connect('mongodb+srv://rth:RAFA1472@rthdb.7bsiw.mongodb.net/rthDB?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true });
+
+const cancionSchema = new Schema (
+  {
+    name:String,
+    artist:String,
+    duration:String
+  }
+)
+
+const Cancion = mongoose.model('Cancion', cancionSchema);
 
 const listarCanciones = (req, res) => {
   if (listaDeCanciones.length > 0) {
     res.json({
-      canciones: listaDeCanciones,
+      
     });
   } else {
     res.status(404).send("No se encontraron canciones!");

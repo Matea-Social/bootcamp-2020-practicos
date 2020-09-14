@@ -1,7 +1,6 @@
 const express = require("express");
 
 const manejador = require("./manejador");
-
 const app = express();
 const port = 3000;
 
@@ -20,9 +19,7 @@ app.post("/", manejador.nuevaCancion);
 app.delete("/:cancion", manejador.eliminarCancionPorNombre);
 
 // PUT Modifica una canción
-app.put("/:cancion", (req, res) => {
-  res.send("implementar PUT");
-});
+app.put("/:cancion", manejador.modificoCancion);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
