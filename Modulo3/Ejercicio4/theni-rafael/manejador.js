@@ -3,26 +3,26 @@ const listaDeCanciones = [];
 
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
-mongoose.connect('mongodb+srv://rth:RAFA1472@rthdb.7bsiw.mongodb.net/rthDB?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://rth:RAFA1472@rthdb.7bsiw.mongodb.net/mateify?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true });
 
 const cancionSchema = new Schema (
   {
-    name:String,
+    name: {type: String, required: true},
     artist:String,
     duration:String
-  }
+  }, {collection: 'songList'}
 )
 
-const Cancion = mongoose.model('Cancion', cancionSchema);
+let Canciones = mongoose.model('songList', cancionSchema);
 
-const listarCanciones = (req, res) => {
-  if (listaDeCanciones.length > 0) {
-    res.json({
-      
-    });
-  } else {
-    res.status(404).send("No se encontraron canciones!");
-  }
+const connection = mongoose.connection;
+
+connection.once("open", function() {
+  console.log("MongoDB database connection established successfully");
+});
+const listarCanciones = async (req, res) => {
+  const lala = await Canciones.find()
+  res.send(lala)
 };
 
 const obtenerCancionPorNombre = (req, res) => {
