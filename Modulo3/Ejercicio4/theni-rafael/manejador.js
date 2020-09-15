@@ -1,5 +1,3 @@
-// Lista de canciones
-
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 mongoose.connect('mongodb+srv://rth:RAFA1472@rthdb.7bsiw.mongodb.net/mateify?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true });
@@ -60,7 +58,7 @@ const modificoCancion = async (req, res) => {
   var query ={name : nombre}
   if (cancionEsValida(cancion)) {
     await Canciones.findOneAndUpdate(query, 
-        {     name: cancion.name, 
+        {    
               artist: cancion.artist, 
               duration: cancion.duration
         }
