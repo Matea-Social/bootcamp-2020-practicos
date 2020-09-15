@@ -7,35 +7,31 @@ app.use(express.json());
 
 
 mongoose.connect(
-  "mongod b+srv://Alan-matea:Matea2020@prueba-db.vrgps.mongodb.net/Mateify?retryWrites=true&w=majority",
-  { userNewUrlParser: true }
+  "mongodb+srv://Alan-matea:Matea2020@prueba-db.vrgps.mongodb.net/Mateify?retryWrites=true&w=majority",
+  { useUnifiedTopology: true, useNewUrlParser: true }
 );
 
 const Schema = mongoose.Schema;
 
-var cancionesSchema = new Schema({
-  name: String,
-  artist: String,
+let cancionesSchema = new Schema({
+  name: { type: String, required: true },
+  artist: { type: String }
 });
 
-var canciones = mongoose.model("Mateify", cancionesSchema, "Canciones");
-
+let canciones = mongoose.model('Mateify', cancionesSchema, 'Canciones');
 
 
 // GET Devuelve la lista de canciones
-app.get("/", async (req, res) => {
-  var songs = await canciones.find();
-  console.log("pasa el find");
-  res.status(200);
+app.get("/", async(req, res) => {
+  const songs = await canciones.find();
   res.send(songs);
 });
 
 
-
 // POST Crea nueva cancion
 app.post("/", async (req, res) => {
-    res.send(hola);
-  
+  const nuevaCancion = req.body;
+  const addCancion = new type(arguments);
 });
 
 app.listen(port, () => {
