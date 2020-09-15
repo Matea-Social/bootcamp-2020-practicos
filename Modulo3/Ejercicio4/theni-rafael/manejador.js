@@ -24,7 +24,7 @@ const listarCanciones = async (req, res) => {
     res.send(listacanciones)
   }
   else{
-    res.status(400).send("No existen canciones en esta base de datos.");
+    res.status(400).send("No existen canciónes en esta base de datos.");
   }
   
 };
@@ -36,7 +36,7 @@ const obtenerCancionPorNombre = async (req, res) => {
     res.send(resultado);
   }
   else{
-    res.status(400).send("No existe una cancion con ese nombre en nuestra base de datos.");
+    res.status(400).send("No existe una canción con ese nombre en esta base de datos.");
   }
 };
 
@@ -54,7 +54,7 @@ const nuevaCancion = (req, res) => {
     Canciones.create(req.body);
     res.json(req.body);
   } else {
-    res.status(400).send("El formato de la canción es incorrecto");
+    res.status(400).send("El formato de la canción es incorrecto")
   }
 };
 
@@ -63,13 +63,19 @@ const modificoCancion = async (req, res) => {
   const nombre = req.params.cancion;
   var query ={name : nombre}
   if (cancionEsValida(cancion)) {
-    await Canciones.findOneAndUpdate(query, 
-        {    
-          artist: cancion.artist, 
-          duration: cancion.duration
-        }
+    if(await Canciones.findOneAndUpdate(query, 
+          {    
+            artist: cancion.artist, 
+            duration: cancion.duration
+          }
+        )
       )
-    res.json(req.body);
+    {
+      res.json(req.body)
+    }
+    else(
+      res.status(400).send("No existe una canción con ese nombre en esta base de datos.")
+    )
   } else {
     res.status(400).send("El formato de la canción es incorrecto.");
   }
