@@ -1,5 +1,4 @@
 // Lista de canciones
-const listaDeCanciones = [];
 
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
@@ -20,9 +19,10 @@ const connection = mongoose.connection;
 connection.once("open", function() {
   console.log("MongoDB database connection established successfully");
 });
+
 const listarCanciones = async (req, res) => {
-  const lala = await Canciones.find()
-  res.send(lala)
+  const listacanciones = await Canciones.find()
+  res.send(listacanciones)
 };
 
 const obtenerCancionPorNombre = async (req, res) => {
