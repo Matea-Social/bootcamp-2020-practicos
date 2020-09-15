@@ -20,7 +20,13 @@ connection.once("open", function() {
 
 const listarCanciones = async (req, res) => {
   const listacanciones = await Canciones.find()
-  res.send(listacanciones)
+  if (listacanciones.length >= 1){
+    res.send(listacanciones)
+  }
+  else{
+    res.status(400).send("No existen canciones en esta base de datos.");
+  }
+  
 };
 
 const obtenerCancionPorNombre = async (req, res) => {
@@ -59,8 +65,8 @@ const modificoCancion = async (req, res) => {
   if (cancionEsValida(cancion)) {
     await Canciones.findOneAndUpdate(query, 
         {    
-              artist: cancion.artist, 
-              duration: cancion.duration
+          artist: cancion.artist, 
+          duration: cancion.duration
         }
       )
     res.json(req.body);
