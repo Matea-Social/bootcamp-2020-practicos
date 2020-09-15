@@ -13,9 +13,9 @@ app.route("/")
     }
     res.status(404).send("No hay canciones");
   })
-  .post((req, res) => {
+  .post(async(req, res) => {
     const cancionBody = req.body;
-    const nuevaCancion = new Cancion(cancionBody);
+    const nuevaCancion = await new Cancion(cancionBody);
     nuevaCancion.save(function (err) {
       if (err){
         res.status(404).send("No se pudo agregar la cancion");
@@ -34,10 +34,13 @@ app.route("/:name")
     res.send(cancionName);
   })
   .delete(async(req, res) => {
-    const name = req.params.name;
-    const cancionBorrada = await Cancion.findOneAndDelete({name: name});
-    Cancion = cancionBorrada;
-    res.status(201).send("Cancion eliminada");
+    try {
+      const name = req.params.name;
+      await Cancion.findOneAndDelete({name: name});
+      res.status(201).send("Cancion eliminada");
+    } catch(e) {
+      throw e;
+    }
   })
   .put(async(req, res) => {
     const name = req.params.name;
@@ -53,4 +56,4 @@ app.route("/:name")
     })
   })
 
-app.listen(5000);
+app.listen(4000);
