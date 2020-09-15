@@ -25,18 +25,15 @@ const listarCanciones = async (req, res) => {
   res.send(lala)
 };
 
-const obtenerCancionPorNombre = (req, res) => {
+const obtenerCancionPorNombre = async (req, res) => {
   const nombre = req.params.cancion;
-
-  const resultado = listaDeCanciones.filter((cancion) => {
-    if (cancion.name === nombre) {
-      return true;
-    }
-
-    return false;
-  });
-
-  res.send(resultado);
+  const resultado = await Canciones.find({name : nombre})
+  if (resultado.length >= 1){
+    res.send(resultado);
+  }
+  else{
+    res.status(400).send("No existe una cancion con ese nombre en nuestra base de datos.");
+  }
 };
 
 // valida que el formato de la cancion sea valida
@@ -50,45 +47,38 @@ const cancionEsValida = (cancion) => {
 const nuevaCancion = (req, res) => {
   const cancion = req.body;
   if (cancionEsValida(cancion)) {
-    listaDeCanciones.push(req.body);
+    Canciones.create(req.body);
     res.json(req.body);
   } else {
     res.status(400).send("El formato de la canción es incorrecto");
   }
 };
 
-const modificoCancion = (req, res) => {
+const modificoCancion = async (req, res) => {
   const cancion = req.body;
   const nombre = req.params.cancion;
+  var query ={name : nombre}
   if (cancionEsValida(cancion)) {
-    const resultado = listaDeCanciones.filter((e) => {
-    if (e.name !== nombre) {
-      return true;
-    }
-    return false;
-    });
-    listaDeCanciones = resultado;
-    listaDeCanciones.push(cancion);
+    await Canciones.findOneAndUpdate(query, 
+        {     name: cancion.name, 
+              artist: cancion.artist, 
+              duration: cancion.duration
+        }
+      )
     res.json(req.body);
   } else {
-    res.status(400).send("El formato de la canción es incorrecto");
+    res.status(400).send("El formato de la canción es incorrecto.");
   }
 };
 
-const eliminarCancionPorNombre = (req, res) => {
+const eliminarCancionPorNombre = async (req, res) => {
   const nombre = req.params.cancion;
-
-  const resultado = listaDeCanciones.filter((cancion) => {
-    if (cancion.name !== nombre) {
-      return true;
-    }
-
-    return false;
-  });
-
-  listaDeCanciones = resultado;
-
-  res.send("Canción eliminada");
+  var query ={name : nombre}
+  if (await Canciones.deleteOne(query)) {
+    res.send("Canción eliminada.");
+  } else {
+    res.status(400).send("No se puede encontrar una cancion con ese nombre.");
+  }
 };
 
 module.exports = {
