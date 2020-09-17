@@ -37,32 +37,40 @@ const songsSchema = new Schema({
 let songs = mongoose.model('Canciones', songsSchema);
 
 
+/* FUNCTIONS */
+
+const songIsValid = (song) => {
+    if (song.name && song.artist && song.duration) {
+      return true;
+    }
+    return false;
+  };
+
 const alistSongList = async (req, res) => {
     const sFind = await songs.find()
 
     res.send(sFind);
 }
 
-const addSong = async (req, res) => {
-    const sBody = req.body;
-    const newSong = new Cancion(sBody);
-    newSong.save(function (err) {
-    if (err){
-        res.status(404).send("Error: No se ha podido agregar la música");
-        console.log(err);
-    } else {
-        res.status(201).send("Alerta: Se agregó la música");
-        }
-    })
-    console.log(newSong); 
+const alistSongByName = async (req,res) => {
+    const songName = req.params.songname
+    const result = await songs.find({name : songName})
+
+    if (result.length > 0) {
+        res.status(200).send(result);
+    }else{
+        res.status(400).send("No se ha encontrado esa canción, verifica los datos!")
+    }
+
 }
 
 //Get
+
 server.get("/", alistSongList);
 
-//Post
 
-server.post('/', addSong)
+server.get("/:songname", alistSongByName)
+
 
 
 /* CONSOLE LOGS */
