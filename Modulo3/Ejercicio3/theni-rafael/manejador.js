@@ -1,4 +1,3 @@
-// Lista de canciones
 let listaDeCanciones = [];
 
 const listarCanciones = (req, res) => {
