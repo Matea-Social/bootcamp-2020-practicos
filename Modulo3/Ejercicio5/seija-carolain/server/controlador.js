@@ -1,20 +1,35 @@
-                                      //CONTROLADOR
+                                        //CONTROLADOR
 
 //Mongoose
 const mongoose = require("mongoose");
 //Modelo
-const baseDeDatos = require('./basedeDatos');
+const baseDeDatos = require('./server/baseDeDatos');
 
 //funciones
-const devuelveTodo = async (req , res) => {
-    var list = await song.find();
-    res.send(list);
-    console.log("get que devuelve toda mis canciones");
-};
 
+//get
+function listaCanciones(){
+    let canciones = baseDeDatos.listaCancionesMateify();
+}
+//get
+function cancionBuscada(){
+    let cancionQueBusco = baseDeDatos.cancionQueBuscoMateify();
+}
+
+//post
+function cancionAgregada() {
+    let cancionQueAgrego = baseDeDatos.cancionQueAgregoMateify();
+};
+//delete
+function cancionAeliminar() {
+    let cancionQueElimino = baseDeDatos.cancionQueEliminoMateify();
+};
 
 
 //importacion de cada funcion
 module.exports = {
-    devuelveTodo,
+     listaCanciones,
+     cancionAgregada,
+     cancionAeliminar,
+     cancionBuscada
 };
