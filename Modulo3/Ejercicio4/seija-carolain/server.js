@@ -59,5 +59,19 @@ app.delete("/", async (req, res) => {
   console.log("delete que elimina la cancion");
 });
 
+app.put("/replace"),function(req, res) {
+  song.replaceOne(
+    { name: "Clara" },
+    { name: "Johnny Boy", age: 2, breed: "Labrador" },
+    function(err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+};
+
 app.listen(3000);
 console.log("http://localhost:3000");
