@@ -21,10 +21,9 @@ app.route("/")
       const cancionBody = req.body;
       const nuevaCancion = await controller.agregarCancion(cancionBody);
       if(nuevaCancion) {
-        res.status(404).send("No se pudo agregar la cancion");
+        res.status(404).send(nuevaCancion);
       } else {
         res.status(201).send("Se agregó la cancion");
-        console.log(nuevaCancion);
       }
     } catch(e) {
       throw e;

@@ -5,7 +5,10 @@ const listarCanciones = async() => {
 }
 
 const agregarCancion = async(cancionBody) => {
-    return await modelsData.agregarCancion(cancionBody)
+    if(cancionBody.name && cancionBody.album && cancionBody.duration && cancionBody.artist) {
+        return await modelsData.agregarCancion(cancionBody);
+    }
+    return "No se agregó la cancion por formato incorrecto";
 }
 
 const buscarCancion = async(name) => {
